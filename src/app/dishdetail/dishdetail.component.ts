@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Dish } from '../shared/dish';
 import { DishService } from '../services/dish.service';
 import { Comment } from '../shared/comment';
+import { visibility, flyInOut, expand } from '../animation/app.animation';
 
 import { Location } from '@angular/common';
 import { Params, ActivatedRoute } from '@angular/router'
@@ -12,7 +13,16 @@ import { switchMap } from 'rxjs/operators';
 @Component({
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
-  styleUrls: ['./dishdetail.component.scss']
+  styleUrls: ['./dishdetail.component.scss'],
+  host: {
+    '[@flyInOut]': 'true',
+    'style': 'display: block'
+  },
+  animations: [
+    visibility(),
+    flyInOut(),
+    expand()
+  ]
 })
 export class DishdetailComponent implements OnInit {
 
@@ -24,6 +34,7 @@ export class DishdetailComponent implements OnInit {
   commentForm: FormGroup;
   errMess: string;
   feedbackComment: Comment;
+  visibility;
 
   @ViewChild('cform') commentFormDirective;
 
@@ -53,10 +64,19 @@ export class DishdetailComponent implements OnInit {
   ngOnInit(): void {
     this.dishService.getDishIds().subscribe(dishIds => this.dishIds = dishIds,
       errmess => this.errMess = <any>errmess); //params (:id) es un observable
+      
     // El switchMap para de emitir valores del observable interno si un nuevo observable comienza a emitir
-    this.route.params.pipe(switchMap((params: Params) => this.dishService.getDish(params['id']))) //Inner observable
-      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id) },
-      errmess => this.errMess = errmess); // El dish también es un observable
+    this.route.params.pipe(switchMap((params: Params) => {
+      this.visibility = 'hidden'; 
+      return this.dishService.getDish(params['id']); //Inner observable
+      })) 
+      .subscribe(dish => { 
+        this.dish = dish; 
+        this.dishcopy = dish; 
+        this.setPrevNext(dish.id);
+        this.visibility = 'shown'; 
+        },
+        errmess => this.errMess = errmess); // El dish también es un observable
   }
 
   createForm() {
