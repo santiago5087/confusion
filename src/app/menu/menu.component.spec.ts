@@ -17,7 +17,7 @@ import { MenuComponent } from './menu.component';
 
 describe('MenuComponent', () => {
   let component: MenuComponent;
-  let fixture: ComponentFixture<MenuComponent>;
+  let fixture: ComponentFixture<MenuComponent>; // Da herramientar para interactuar con el componente/DOM
 
   beforeEach(async(() => {  //Servicio simulado, ya que no se debe de usar el "real"
     const dishServiceStub = {
@@ -26,7 +26,7 @@ describe('MenuComponent', () => {
       }
     }
 
-    TestBed.configureTestingModule({
+    TestBed.configureTestingModule({ // Crea una instancia del componente
       imports: [ BrowserAnimationsModule,
       FlexLayoutModule,
       MatGridListModule,

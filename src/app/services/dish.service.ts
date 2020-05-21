@@ -4,6 +4,7 @@ import { delay, map, catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Dish } from '../shared/dish';
+import { Comment } from '../shared/comment';
 import { baseURL } from '../shared/baseurl';
 import { ProcessHTTPMsgService } from '../services/process-httpmsg.service';
 
@@ -32,7 +33,7 @@ export class DishService {
   }
 
   getDishIds(): Observable<string[] | any> {
-    return this.getDishes().pipe(map(dishes => dishes.map(dish => dish.id)))
+    return this.getDishes().pipe(map(dishes => dishes.map(dish => dish._id)))
   }
 
   putDish(dish: Dish): Observable<Dish> {
@@ -42,7 +43,12 @@ export class DishService {
       })
     }
 
-    return this.http.put<Dish>(baseURL + 'dishes/' + dish.id, dish, httpOptions)
+    return this.http.put<Dish>(baseURL + 'dishes/' + dish._id, dish, httpOptions)
+    .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  postDishComment(dish: Dish, comment: Comment): Observable<Dish> {
+    return this.http.post<Dish>(baseURL + 'dishes/' + dish._id + '/comments', comment)
     .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 }

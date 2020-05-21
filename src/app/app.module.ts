@@ -1,6 +1,6 @@
 import { BrowserModule} from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 
@@ -41,6 +41,8 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
 import { LoginComponent } from './login/login.component';
 import { baseURL } from './shared/baseurl';
 import { HighlightDirective } from './directives/highlight.directive';
+import { AuthInterceptor } from './services/auth.interceptor';
+import { FavoritesComponent } from './favorites/favorites.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,8 @@ import { HighlightDirective } from './directives/highlight.directive';
     HomeComponent,
     ContactComponent,
     LoginComponent,
-    HighlightDirective
+    HighlightDirective,
+    FavoritesComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +83,17 @@ import { HighlightDirective } from './directives/highlight.directive';
   entryComponents: [LoginComponent],
   providers: [DishService, PromotionService, LeaderService,
     ProcessHTTPMsgService,
-  {provide: 'BaseURL', useValue: baseURL}],
+  {provide: 'BaseURL', useValue: baseURL},
+  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+/*
+Mejoras:
+- Mejor el cuado de dialog del login (agregar un header, etc).
+- Una vez el usuario se loguea, que pueda ver su imágen de perfil (como hotmail podría ser).
+- Arreglar lo del corazón
+- Implementar el interceptor de response messages
+- Arreglar la parte de los comentarios del plato, para que solo pueda comentar alguien logueado 
+- Arreglar el header para cuando se observa desde un dispositivo de menor resol.
+*/

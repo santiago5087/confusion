@@ -2,11 +2,12 @@
     fxLayout="row"
     fxLayout.sm="column"
     fxLayout.xs="column"
-    fxLayoutAlign.gt-md="space-around center"
+    fxLayoutAlign.gt-md="space-around start"
     fxLayoutGap="10px"
     fxLayoutGap.xs="0">
 
     <div fxFlex="40">
+        <h1 matLine>Dish Detail</h1>
         <mat-card *ngIf="dish" [@visibility]="visibility" [@expand]>
             <mat-card-header>
                 <mat-card-title>
@@ -23,6 +24,7 @@
                 </button>
                 <button mat-button (click)="goBack()">BACK</button>
                 <button mat-button>LIKE</button>
+                <button mat-button (click)="addToFavorites()"><span class="{{ favorite? 'fa fa-heart fa-lg' : 'fa fa-heart-o fa-lg' }}" aria-hidden="true"></span></button>
                 <button mat-button>SHARE</button>
                 <span class="flex-spacer"></span>
                 <button mat-button [routerLink]="['/dishdetail', next]">
@@ -51,12 +53,12 @@
                     <span>{{ comment.rating }} Stars</span>
                 </p>
                 <p matLine>
-                    <span>-- {{ comment.author }} {{ comment.date | date}}</span>
+                    <span>-- {{ comment.author.username }} {{ comment.date | date}}</span>
                 </p>
             </mat-list-item>
         </mat-list>
 
-        <form novalidate [formGroup]="commentForm" #cform='ngForm' (ngSubmit)="onSubmit()">
+        <form novalidate *ngIf="username" [formGroup]="commentForm" #cform='ngForm' (ngSubmit)="onSubmit()">
             <mat-list *ngIf="cform.form.valid">
                 <mat-list-item>
                     <p matLine>
@@ -66,16 +68,10 @@
                         <span>{{ commentForm.get('rating').value }} Stars</span>
                     </p>
                     <p matLine>
-                        <span>-- {{ commentForm.get('author').value }}</span>
+                        <span>-- {{ username }}</span>
                     </p>   
                 </mat-list-item>
             </mat-list>
-            <p>
-                <mat-form-field class="form-size">
-                    <input matInput formControlName="author" placeholder="Author" type="text" required>
-                    <mat-error *ngIf="formErrors.author">{{ formErrors.author }}</mat-error>
-                </mat-form-field>
-            </p>
             <table class="form-size">
                 <tr>
                     <mat-slider formControlName="rating" min="1" max="5" step="1" value="5" thumbLabel tickInterval="1">

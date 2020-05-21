@@ -1,8 +1,11 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 import { Dish } from '../shared/dish';
 import { DishService } from '../services/dish.service';
+import { FavoriteService } from '../services/favorite.service';
+import { AuthService } from '../services/auth.service';
 import { Comment } from '../shared/comment';
 import { visibility, flyInOut, expand } from '../animation/app.animation';
 
@@ -24,7 +27,7 @@ import { switchMap } from 'rxjs/operators';
     expand()
   ]
 })
-export class DishdetailComponent implements OnInit {
+export class DishdetailComponent implements OnInit, OnDestroy {
 
   dish: Dish;
   dishcopy: Dish;
@@ -35,8 +38,13 @@ export class DishdetailComponent implements OnInit {
   errMess: string;
   feedbackComment: Comment;
   visibility;
+  subscription: Subscription;
+  username: String = undefined;
+  favorite = false;
 
   @ViewChild('cform') commentFormDirective;
+
+  //El author fue eliminado de la vista ya que este es obtenido desde el token en el backed
 
   formErrors = {
     author: '',
@@ -57,15 +65,25 @@ export class DishdetailComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private fb: FormBuilder,
+    private favoriteService: FavoriteService,
+    public auth: AuthService,
     @Inject('BaseURL') public baseURL) { 
       this.createForm();
     }
 
+    /*
+    .subscribe(observer) ejecuta el observable y comienza a recibir notificaciones y se le pasa un observer,
+    este método retorna un Subscription object que tiene un método unsubscribe el cual se llama para dejar de 
+    recibir notificaciones.
+    */
+
   ngOnInit(): void {
-    this.dishService.getDishIds().subscribe(dishIds => this.dishIds = dishIds,
-      errmess => this.errMess = <any>errmess); //params (:id) es un observable
-      
-    // El switchMap para de emitir valores del observable interno si un nuevo observable comienza a emitir
+    this.auth.loadUserCredentials();
+    this.subscription = this.auth.getUsername().subscribe(usn => this.username = usn);
+    this.dishService.getDishIds().subscribe(dishIds => {
+      this.dishIds = dishIds
+
+      // El switchMap para de emitir valores del observable interno si un nuevo observable comienza a emitir
     this.route.params.pipe(switchMap((params: Params) => {
       this.visibility = 'hidden'; 
       return this.dishService.getDish(params['id']); //Inner observable
@@ -73,15 +91,21 @@ export class DishdetailComponent implements OnInit {
       .subscribe(dish => { 
         this.dish = dish; 
         this.dishcopy = dish; 
-        this.setPrevNext(dish.id);
+        this.setPrevNext(dish._id);
         this.visibility = 'shown'; 
         },
-        errmess => this.errMess = errmess); // El dish también es un observable
+        errmess => this.errMess = errmess); // El dish también es un observable  
+      },
+    errmess => this.errMess = <any>errmess); //params (:id) es un observable
+        
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   createForm() {
     this.commentForm = this.fb.group({
-      author: ['', [Validators.required, Validators.minLength(2)]],
       rating: 5,
       comment: ['', Validators.required]
     });
@@ -112,12 +136,17 @@ export class DishdetailComponent implements OnInit {
     this.feedbackComment.date = (new Date()).toISOString();
     console.log(this.feedbackComment);
 
+    /*
     this.dishcopy.comments.push(this.feedbackComment);
     this.dishService.putDish(this.dishcopy).subscribe(dish => { this.dish = dish; this.dishcopy = dish},
       errMess => { this.dish = null; this.dishcopy = null; this.errMess = <any>errMess })
+    */
+
+    this.dishService.postDishComment(this.dish, this.feedbackComment)
+    .subscribe(dish => this.dish = dish,
+      errMess => { this.dish = null; this.errMess = errMess});
 
     this.commentForm.reset({
-      author: '',
       rating: 5,
       comment: ''
     });
@@ -133,6 +162,16 @@ export class DishdetailComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  addToFavorites() {
+    if (!this.favorite) {
+      this.favoriteService.postFavorite(this.dish._id)
+      .subscribe(favorites => {
+        console.log(favorites);
+        this.favorite = true;
+      });
+    }
   }
 
 }

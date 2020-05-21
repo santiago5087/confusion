@@ -17,7 +17,7 @@ describe('workspace-project App', () => {
     page.navigateTo('/');
 
     const navlink = page.getAllElement('a').get(1);
-    navlink.click()
+    navlink.click();
 
     expect(page.getTitleText('h3')).toBe('About Us');
   });
