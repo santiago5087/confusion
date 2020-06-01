@@ -1,0 +1,47 @@
+<div class="container" fxLayout="column" fxLayoutAlign="center center">
+  <div fxFlex class="signup-box" fxLayout="column" fxLayoutAlign="center stretch">
+    
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <h1 matLine style="margin: 0;">Create your account</h1>
+      <h4 matLine style="color: gray;">For more benefits and promotions!</h4>
+    </div>
+    
+    <div fxFlex>
+      <button fxFlex mat-flat-button class="btn-fb" type="submit">
+        <i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i>   Sign in with Facebook</button>   
+      <button fxFlex mat-flat-button class="btn-g" type="submit">
+        <i class="fa fa-google fa-lg" aria-hidden="true"></i>   Sign in with Google</button>
+    </div>
+    
+    <div fxFlex>
+      <form fxLayout="column" fxLayoutAlign="center stretch" novalidate 
+      [formGroup]="signupForm" #form="ngForm" (ngSubmit)="onSubmit()">
+        <mat-form-field fxFlex appearance="fill">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" type="text" required>
+        </mat-form-field>
+        <mat-form-field fxFlex appearance="fill">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password" required>
+        </mat-form-field>
+        <mat-form-field fxFlex appearance="fill">
+          <mat-label>Verify password</mat-label>
+          <input matInput formControlName="passwordVer" type="password" required>
+        </mat-form-field>
+        <mat-form-field fxFlex appearance="fill">
+          <mat-label>First name</mat-label>
+          <input matInput formControlName="firstname" type="text">
+        </mat-form-field>
+        <mat-form-field fxFlex appearance="fill">
+          <mat-label>Last name</mat-label>
+          <input matInput formControlName="lastname" type="text">
+        </mat-form-field>
+        <button fxFlex mat-flat-button color="primary" type="submit">Sign up</button>
+      </form>
+
+    </div>
+  </div>
+
+
+
+</div>

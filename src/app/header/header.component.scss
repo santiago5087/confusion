@@ -1,8 +1,5 @@
-$lt-gray: #ddd;
-$background-dark: #512DA8;
-$background-light: #9575CD;
-$background-pale: #D1C4E9;
-$background-moredark: #4527A0;
+$background-light: #E57373;
+$background-moredark: #D50000;
 
 @mixin zero-margin($pad-up-down, $pad-left-right) {
     margin: 0px auto;
@@ -10,11 +7,17 @@ $background-moredark: #4527A0;
 }
 
 .jumbotron {
-    @include zero-margin(70px,30px);
+    @include zero-margin(30px, 30px);
     background: $background-light;
-    color:floralwhite;
+    color: white;
     min-height: 150px;
+    
+    h1 {
+        font-family: 'Dancing Script', cursive;
+        font-size: 3em;
+    }
 }
+
 
 .active {
     background: $background-moredark;

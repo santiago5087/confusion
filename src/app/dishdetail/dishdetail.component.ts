@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 
 import { Dish } from '../shared/dish';
 import { DishService } from '../services/dish.service';
+import { FavoritesComponent } from '../favorites/favorites.component';
 import { FavoriteService } from '../services/favorite.service';
 import { AuthService } from '../services/auth.service';
 import { Comment } from '../shared/comment';
@@ -40,7 +41,7 @@ export class DishdetailComponent implements OnInit, OnDestroy {
   visibility;
   subscription: Subscription;
   username: String = undefined;
-  favorite = false;
+  favorite: boolean;
 
   @ViewChild('cform') commentFormDirective;
 
@@ -79,9 +80,12 @@ export class DishdetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.auth.loadUserCredentials();
+
     this.subscription = this.auth.getUsername().subscribe(usn => this.username = usn);
     this.dishService.getDishIds().subscribe(dishIds => {
       this.dishIds = dishIds
+
+      //Revisar bien por qué este está dentro de este
 
       // El switchMap para de emitir valores del observable interno si un nuevo observable comienza a emitir
     this.route.params.pipe(switchMap((params: Params) => {
@@ -92,12 +96,15 @@ export class DishdetailComponent implements OnInit, OnDestroy {
         this.dish = dish; 
         this.dishcopy = dish; 
         this.setPrevNext(dish._id);
-        this.visibility = 'shown'; 
-        },
-        errmess => this.errMess = errmess); // El dish también es un observable  
-      },
-    errmess => this.errMess = <any>errmess); //params (:id) es un observable
+        this.visibility = 'shown';
+        this.favoriteService.isFavorite(this.dish._id)
+        .subscribe(resp => { this.favorite = <boolean>resp.exist }, errmess => this.errMess = errmess);
         
+      },
+      errmess => this.errMess = errmess); // El dish también es un observable  
+    },
+    errmess => this.errMess = <any>errmess); //params (:id) es un observable
+    
   }
 
   ngOnDestroy() {
@@ -156,6 +163,7 @@ export class DishdetailComponent implements OnInit, OnDestroy {
 
   setPrevNext(dishId: string) {
     const index = this.dishIds.indexOf(dishId);
+
     this.prev = this.dishIds[(this.dishIds.length + index - 1) % this.dishIds.length];
     this.next = this.dishIds[(this.dishIds.length + index + 1) % this.dishIds.length];
   }
@@ -171,6 +179,12 @@ export class DishdetailComponent implements OnInit, OnDestroy {
         console.log(favorites);
         this.favorite = true;
       });
+    } else {
+      this.favoriteService.deleteFavorite(this.dish._id)
+      .subscribe(favorites => {
+        console.log(favorites);
+        this.favorite = false;
+      })
     }
   }
 

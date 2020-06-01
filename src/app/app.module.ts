@@ -21,6 +21,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatDividerModule } from '@angular/material/divider';
 
 import 'hammerjs';
 
@@ -43,6 +44,7 @@ import { baseURL } from './shared/baseurl';
 import { HighlightDirective } from './directives/highlight.directive';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { FavoritesComponent } from './favorites/favorites.component';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,8 @@ import { FavoritesComponent } from './favorites/favorites.component';
     ContactComponent,
     LoginComponent,
     HighlightDirective,
-    FavoritesComponent
+    FavoritesComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +81,8 @@ import { FavoritesComponent } from './favorites/favorites.component';
     MatSelectModule,
     MatSlideToggleModule,
     MatProgressSpinnerModule,
-    MatSliderModule
+    MatSliderModule,
+    MatDividerModule
   ],
   entryComponents: [LoginComponent],
   providers: [DishService, PromotionService, LeaderService,
@@ -90,10 +94,9 @@ import { FavoritesComponent } from './favorites/favorites.component';
 export class AppModule { }
 /*
 Mejoras:
-- Mejor el cuado de dialog del login (agregar un header, etc).
+- Hacer la vista del sign up
+- Hacer la página responsive
 - Una vez el usuario se loguea, que pueda ver su imágen de perfil (como hotmail podría ser).
-- Arreglar lo del corazón
-- Implementar el interceptor de response messages
-- Arreglar la parte de los comentarios del plato, para que solo pueda comentar alguien logueado 
-- Arreglar el header para cuando se observa desde un dispositivo de menor resol.
+- Crear el signup con el facebook y google oAuth y el recuperador de contra
+- Buscar como hacer que el footer se quede pegado al fondo de la pantalla
 */

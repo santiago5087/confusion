@@ -1,25 +1,50 @@
-<p>{{ user | json }}</p>
+<div class="container" fxLayout="column" fxLayoutAlign="center center">
+  <div class="signin-box" fxLayout="column" fxLayoutAlign="center stretch">
 
-<form novalidate #loginForm="ngForm" (ngSubmit)="onSubmit()">
-  <mat-dialog-content>
-    <p>
-      <mat-form-field>
-        <input matInput placeholder="Username" type="text" [(ngModel)]="user.username"
-          #username="ngModel" name="username" required>
-          <mat-error *ngIf="username.errors?.required">Username is invalid</mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Password" type="text" [(ngModel)]="user.password"
-          #password="ngModel" name="password" required>
-          <mat-error *ngIf="password.errors?.required">Password is invalid</mat-error>
-      </mat-form-field>
-      <mat-checkbox [(ngModel)]="user.remember" name="remember">Remember me</mat-checkbox>
-    </p>
-  </mat-dialog-content>
-  <mat-dialog-actions>
-    <span class="flex-spacer"></span>
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button type="submit" mat-button class="background-primary text-floral-white"
-      [disabled]="loginForm.form.invalid">Login</button>
-  </mat-dialog-actions>
-</form>
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <img src="../../assets//images/logo.png" style="height: 100px;" alt="logo">
+      <h2 matLine>Sign in to ConFusion</h2>
+    </div>
+  
+    
+      <form fxFlex fxLayout="column" novalidate #loginForm="ngForm" (ngSubmit)="onSubmit()">
+        <mat-dialog-content fxLayoutAlign="space-between center">
+          
+            <mat-form-field fxFlex appearance="fill" style="margin-right: 10px;">
+              <input matInput placeholder="Username or Email" type="text" [(ngModel)]="user.username"
+                #username="ngModel" name="username" required>
+                <mat-error *ngIf="username.errors?.required">Username is invalid</mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="fill">
+              <input matInput placeholder="Password" type="password" [(ngModel)]="user.password"
+                #password="ngModel" name="password" required>
+                <mat-error *ngIf="password.errors?.required">Password is invalid</mat-error>
+            </mat-form-field>
+          </mat-dialog-content>
+
+          <mat-checkbox fxFlex [(ngModel)]="user.remember" name="remember" style="font-size: smaller;">
+            Remember me</mat-checkbox>
+
+        <mat-dialog-actions fxFlex style="margin-top: 10px;">
+          <div fxLayout="column">
+            <div fxFlex fxLayoutAlign="space-between center">
+              <button fxFlex type="submit" mat-raised-button class="btn-login" [disabled]="loginForm.form.invalid">Login</button>
+              <button fxFlex mat-raised-button mat-dialog-close>Cancel</button>
+              <p matLine>New to ConFusion? <a matLine href="">Create an account</a></p>
+            </div>
+  
+            <div fxFlex style="margin-top: 35px;">
+              <button fxFlex mat-flat-button class="btn-fb" type="submit">
+                <i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i>   Sign in with Facebook</button>   
+              <button fxFlex mat-flat-button class="btn-g" type="submit">
+                <i class="fa fa-google fa-lg" aria-hidden="true"></i>   Sign in with Google</button>
+            </div>
+
+          </div>
+        </mat-dialog-actions>
+      </form>
+
+
+  </div>
+</div>

@@ -1,0 +1,38 @@
+$primary-color-dark:   #C62828;
+
+p {
+  font-size: smaller;
+  margin: 0px 15px;
+}
+
+form {
+  margin-top: 15px;
+  font-size: small;
+}
+
+mat-dialog-content {
+  margin: 0px;
+  padding: 0px;
+
+  mat-form-field {
+    width: 180px;
+  }
+}
+
+.btn-login {
+  background-color: $primary-color-dark;
+  color: white;
+}
+
+.btn-fb {
+  margin-right: 10px;
+  margin-bottom: 20px;
+  background-color: royalblue;
+  color: white;
+}
+
+.btn-g {
+  margin-bottom: 20px;
+  background-color: orangered;
+  color: white;
+}

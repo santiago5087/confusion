@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   openLoginForm() {
-    this.dialog.open(LoginComponent, {width: "500px", height: "450px"});
+    this.dialog.open(LoginComponent, {width: "480px", height: "500px"});
   }
 
   logOut() {

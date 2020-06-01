@@ -35,7 +35,7 @@ export class FavoriteService {
 
     isFavorite(id: string): Observable<FavoriteExists> {
       if (!this.auth.isLoggedIn()) {
-        return of({ exists: false, favorites: null});
+        return of({ exist: false, favorites: null});
       } 
       
       return this.http.get<FavoriteExists>(baseURL + 'favorites/' + id)
@@ -47,8 +47,8 @@ export class FavoriteService {
       .pipe(catchError(this.processHTTPMsgService.handleError));
     }
 
-    deleteFavorite(id: string) {
-      return this.http.delete(baseURL + 'favorites/' + id)
+    deleteFavorite(id: string): Observable<Favorite> {
+      return this.http.delete<Favorite>(baseURL + 'favorites/' + id)
       .pipe(catchError(this.processHTTPMsgService.handleError));
     }
 }

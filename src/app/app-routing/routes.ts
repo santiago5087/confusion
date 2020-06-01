@@ -7,6 +7,7 @@ import { HomeComponent } from '../home/home.component';
 import { AboutComponent } from '../about/about.component';
 import { ContactComponent } from '../contact/contact.component';
 import { FavoritesComponent } from '../favorites/favorites.component';
+import { SignupComponent } from '../signup/signup.component';
 
 export const routes: Routes = [
     { path: 'home', component: HomeComponent },
@@ -15,5 +16,6 @@ export const routes: Routes = [
     { path: 'dishdetail/:id', component: DishdetailComponent },
     { path: 'aboutus', component: AboutComponent },
     { path: 'favorites', component: FavoritesComponent, canActivate: [AuthGuard] },
+    { path: 'signup', component: SignupComponent },
     { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];

@@ -1,17 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
-@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+//@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~@angular/material/theming';
 @import 'variables';
 @import '../node_modules/font-awesome/scss/font-awesome.scss';
 
-$lt-gray: #ddd;
-$background-dark: #512DA8;
-$background-light: #9575CD;
-$background-pale: #D1C4E9;
-$primary-color-dark:   #512DA8;
+@include mat-core();
+@import 'my-theme.scss';
+
+.main-theme {
+  @include angular-material-theme($main-theme);
+}
+
+$lt-gray:              #ddd;
+$background-light:     #E57373;
+$background-moredark:  #D50000;
+$background-dark:      #EF9A9A;
+$background-pale:      #FFCDD2;
+$primary-color-dark:   #C62828;
 $primary-color:        #673AB7;
 $primary-color-light:  #D1C4E9;
 $primary-color-text:   #FFFFFF;
-$accent-color:         #FFC107;
+$accent-color:         #FFF9C4;
+$accent-color-dark:    #F9A825;
 $primary-text-color:   #212121;
 $secondary-text-color: #757575;
 $divider-color:        #BDBDBD;
@@ -58,8 +68,8 @@ body {
 }
 
 .highlight {
-  background-color: $background-pale;
-  border: 1px solid $primary-color-dark;
+  background-color: $accent-color;
+  border: 1px solid $accent-color-dark;
   z-index: 1;
   transform: scale(1.01);
 }

@@ -1,6 +1,6 @@
 import { Favorite } from './favorite';
 
 export class FavoriteExists {
-  exists: boolean;
+  exist: boolean;
   favorites: Favorite;
 }
