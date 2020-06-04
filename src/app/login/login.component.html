@@ -29,22 +29,22 @@
         <mat-dialog-actions fxFlex style="margin-top: 10px;">
           <div fxLayout="column">
             <div fxFlex fxLayoutAlign="space-between center">
-              <button fxFlex type="submit" mat-raised-button class="btn-login" [disabled]="loginForm.form.invalid">Login</button>
+              <button fxFlex type="submit" mat-raised-button class="btn" [disabled]="loginForm.form.invalid">Login</button>
               <button fxFlex mat-raised-button mat-dialog-close>Cancel</button>
               <p matLine>New to ConFusion? <a matLine href="">Create an account</a></p>
             </div>
-  
-            <div fxFlex style="margin-top: 35px;">
-              <button fxFlex mat-flat-button class="btn-fb" type="submit">
-                <i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i>   Sign in with Facebook</button>   
-              <button fxFlex mat-flat-button class="btn-g" type="submit">
-                <i class="fa fa-google fa-lg" aria-hidden="true"></i>   Sign in with Google</button>
-            </div>
+            
+            
 
           </div>
         </mat-dialog-actions>
       </form>
-
+      <div fxFlex style="margin-top: 35px;">
+        <button fxFlex mat-flat-button class="btn-fb" (click)="facebookAuth()">
+          <i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i>   Sign in with Facebook</button>   
+        <button fxFlex mat-flat-button class="btn-g" (click)="googleAuth()">
+          <i class="fa fa-google fa-lg" aria-hidden="true"></i>   Sign in with Google</button>
+      </div>
 
   </div>
 </div>

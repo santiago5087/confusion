@@ -42,6 +42,11 @@ body {
     display: flex;
 }
 
+.btn {
+  background-color: $primary-color-dark !important;
+  color: white !important;
+}
+
 .background-primary {
     background-color: $background-dark!important;
   }

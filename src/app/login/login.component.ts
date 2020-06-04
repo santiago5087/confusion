@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { AuthService } from '../services/auth.service';
+import { FacebookLoginProvider, SocialUser } from 'angularx-social-login';
 
 @Component({
   selector: 'app-login',
@@ -30,8 +31,25 @@ export class LoginComponent implements OnInit {
       error => {
         console.log(error);
         //this.errMess = error;
-      })
-    
+      });
+  }
+
+  facebookAuth() {
+    this.authService.fbAuth()
+      .subscribe(res => {
+        if (res.success) {
+        } else {
+          console.log(res);
+        }
+        this.dialogRef.close();
+      },
+      error => {
+        console.log(error);
+      });
+  }
+
+  googleAuth() {
+
   }
 
 }

@@ -1,7 +1,7 @@
 //Aquí crearemos todos los temas de nuestra app
 
-$main-theme-primary: mat-palette($mat-red, 500, 800, 200);
-$main-theme-accent: mat-palette($mat-amber, A200);
+$main-theme-primary: mat-palette($mat-red);
+$main-theme-accent: mat-palette($mat-amber);
 $main-theme-warn: mat-palette($mat-deep-orange);
 
 $main-theme: mat-light-theme(

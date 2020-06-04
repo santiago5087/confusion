@@ -1,4 +1,4 @@
-$primary-color-dark:   #C62828;
+// $primary-color-dark:   #C62828;
 
 p {
   font-size: smaller;
@@ -17,11 +17,6 @@ mat-dialog-content {
   mat-form-field {
     width: 180px;
   }
-}
-
-.btn-login {
-  background-color: $primary-color-dark;
-  color: white;
 }
 
 .btn-fb {

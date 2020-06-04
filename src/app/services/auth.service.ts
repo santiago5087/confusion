@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { baseURL } from '../shared/baseurl';
@@ -10,6 +10,13 @@ interface AuthResponse {
   status: string;
   success: string;
   token: string;
+}
+
+interface OAuthResponse {
+  status: string;
+  success: string;
+  token: string;
+  username: string;
 }
 
 interface JWTResponse {
@@ -85,8 +92,18 @@ export class AuthService {
       catchError(this.processHTTPMsgService.handleError));
     }
 
+    fbAuth(): Observable<any> {
+      window.open(baseURL + 'users/auth/facebook',"mywindow","location=1,status=1,scrollbars=1, width=800,height=800");
+
+      window.addEventListener('message', (message) => {
+        this.storeUserCredentials({"username": message.data.username, "token": message.data.token});
+        return of({'success': true, 'username': message.data.username});
+      });
+      
+      return of({'success': false, 'username': null});
+    }
+
     storeUserCredentials(credentials: any) {
-      console.log('storeUserCredentials: ', credentials);
       localStorage.setItem(this.tokenKey, JSON.stringify(credentials));
       this.useCredentials(credentials);
     }
