@@ -12,13 +12,6 @@ interface AuthResponse {
   token: string;
 }
 
-interface OAuthResponse {
-  status: string;
-  success: string;
-  token: string;
-  username: string;
-}
-
 interface JWTResponse {
   status: string;
   success: string;

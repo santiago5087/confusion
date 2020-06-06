@@ -1,7 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { AuthService } from '../services/auth.service';
+import { SignupService } from '../services/signup.service';
+import { from } from 'rxjs';
 
 const comparePwdsValidator: ValidatorFn = (control: FormGroup):
   ValidationErrors | null => {
@@ -19,11 +23,14 @@ const comparePwdsValidator: ValidatorFn = (control: FormGroup):
 export class SignupComponent implements OnInit {
 
   signupForm: FormGroup;
+  errMess: String;
   @ViewChild('form') signupFormDirective;
 
   constructor(private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router) { }
+    private signupService: SignupService,
+    private router: Router,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -40,7 +47,24 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit() {
-
+    this.signupService.submitSignup(this.signupForm.value)
+      .subscribe(signup => {
+        console.log('Successfully registration');
+        this.signupForm.reset({
+          username: '',
+          firstname: '',
+          lastname: '',
+          password: '',
+          passwordVer: ''
+        });
+  
+        this.signupFormDirective.resetForm();
+        this.snackBar.open(signup.status, "close", { duration: 10000 });
+      },
+      errMess => {
+        this.snackBar.open(errMess, "close", { duration: 10000 });
+        this.errMess = errMess;
+      });
   }
 
   facebookAuth() {

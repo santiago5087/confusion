@@ -11,7 +11,7 @@
         <mat-dialog-content fxLayoutAlign="space-between center">
           
             <mat-form-field fxFlex appearance="fill" style="margin-right: 10px;">
-              <input matInput placeholder="Username or Email" type="text" [(ngModel)]="user.username"
+              <input matInput placeholder="Username" type="text" [(ngModel)]="user.username"
                 #username="ngModel" name="username" required>
                 <mat-error *ngIf="username.errors?.required">Username is invalid</mat-error>
             </mat-form-field>
@@ -31,7 +31,7 @@
             <div fxFlex fxLayoutAlign="space-between center">
               <button fxFlex type="submit" mat-raised-button class="btn" [disabled]="loginForm.form.invalid">Login</button>
               <button fxFlex mat-raised-button mat-dialog-close>Cancel</button>
-              <p matLine>New to ConFusion? <a matLine href="">Create an account</a></p>
+              <p matLine>New to ConFusion? <a matLine mat-dialog-close routerLink="/signup">Create an account</a></p>
             </div>
             
             

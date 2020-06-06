@@ -1,7 +1,6 @@
 import { BrowserModule} from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { SocialLoginModule, AuthServiceConfig, FacebookLoginProvider } from 'angularx-social-login';
 
 import { AppComponent } from './app.component';
 
@@ -23,6 +22,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import 'hammerjs';
 
@@ -46,17 +46,6 @@ import { HighlightDirective } from './directives/highlight.directive';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { FavoritesComponent } from './favorites/favorites.component';
 import { SignupComponent } from './signup/signup.component';
-
-let config = new AuthServiceConfig([
-  {
-    id: FacebookLoginProvider.PROVIDER_ID,
-    provider: new FacebookLoginProvider('259838321726019')
-  }
-]);
-
-export function provideConfig() {
-  return config;
-}
 
 @NgModule({
   declarations: [
@@ -95,12 +84,11 @@ export function provideConfig() {
     MatProgressSpinnerModule,
     MatSliderModule,
     MatDividerModule,
-    SocialLoginModule
+    MatSnackBarModule
   ],
   entryComponents: [LoginComponent],
   providers: [DishService, PromotionService, LeaderService,
     ProcessHTTPMsgService,
-  { provide: AuthServiceConfig, useFactory: provideConfig },
   { provide: 'BaseURL', useValue: baseURL },
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
@@ -110,6 +98,5 @@ export class AppModule { }
 Mejoras:
 - Hacer la página responsive
 - Una vez el usuario se loguea, que pueda ver su imágen de perfil (como hotmail podría ser).
-- Crear el signup con el facebook y google oAuth y el recuperador de contra
 - Añadir mapa de nuestra ubicación
 */

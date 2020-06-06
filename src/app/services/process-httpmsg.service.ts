@@ -11,11 +11,11 @@ export class ProcessHTTPMsgService {
 
   public handleError(error: HttpErrorResponse | any) {
     let errMsg: string;
-
-    if (error.error instanceof ErrorEvent) {
-      errMsg = error.error.message;
+    
+    if (error.error.err) {
+      errMsg = error.error.err.message;
     } else {
-      errMsg = `${error.status} - ${error.statusText || ''} ${error.error}`;
+      errMsg = `${error.status} - ${error.statusText || ''} ${error.message}`;
     }
 
     return throwError(errMsg);
