@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 
 import { Dish } from '../shared/dish';
 import { DishService } from '../services/dish.service';
-import { FavoritesComponent } from '../favorites/favorites.component';
 import { FavoriteService } from '../services/favorite.service';
 import { AuthService } from '../services/auth.service';
 import { Comment } from '../shared/comment';
@@ -85,20 +84,18 @@ export class DishdetailComponent implements OnInit, OnDestroy {
     this.dishService.getDishIds().subscribe(dishIds => {
       this.dishIds = dishIds
 
-      //Revisar bien por qué este está dentro de este
-
       // El switchMap para de emitir valores del observable interno si un nuevo observable comienza a emitir
-    this.route.params.pipe(switchMap((params: Params) => {
-      this.visibility = 'hidden'; 
-      return this.dishService.getDish(params['id']); //Inner observable
-      })) 
-      .subscribe(dish => { 
-        this.dish = dish; 
-        this.dishcopy = dish; 
-        this.setPrevNext(dish._id);
-        this.visibility = 'shown';
-        this.favoriteService.isFavorite(this.dish._id)
-        .subscribe(resp => { this.favorite = <boolean>resp.exist }, errmess => this.errMess = errmess);
+      this.route.params.pipe(switchMap((params: Params) => {
+        this.visibility = 'hidden'; 
+        return this.dishService.getDish(params['id']); //Inner observable
+        })) 
+        .subscribe(dish => { 
+          this.dish = dish; 
+          this.dishcopy = dish; 
+          this.setPrevNext(dish._id);
+          this.visibility = 'shown';
+          this.favoriteService.isFavorite(this.dish._id)
+          .subscribe(resp => { this.favorite = <boolean>resp.exist }, errmess => this.errMess = errmess);
         
       },
       errmess => this.errMess = errmess); // El dish también es un observable  

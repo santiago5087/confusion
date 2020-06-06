@@ -49,7 +49,16 @@ export class LoginComponent implements OnInit {
   }
 
   googleAuth() {
-
+    this.authService.gooAuth()
+      .subscribe(res => {
+        if (res.success) {
+        } else {
+          console.log(res);
+        }
+        this.dialogRef.close();
+      },
+      error => {
+        console.log(error);
+      });
   }
-
 }

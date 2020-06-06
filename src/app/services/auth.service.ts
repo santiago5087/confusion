@@ -93,13 +93,32 @@ export class AuthService {
     }
 
     fbAuth(): Observable<any> {
-      window.open(baseURL + 'users/auth/facebook',"mywindow","location=1,status=1,scrollbars=1, width=800,height=800");
+      window.open(baseURL + 'users/auth/facebook',"mywindow","location=1,status=1,scrollbars=1,width=800,height=800");
 
       window.addEventListener('message', (message) => {
-        this.storeUserCredentials({"username": message.data.username, "token": message.data.token});
-        return of({'success': true, 'username': message.data.username});
+        if (message.data.success) {
+          this.storeUserCredentials({"username": message.data.username, "token": message.data.token});
+          return of({'success': true, 'username': message.data.username});
+        } else {
+          return of({'success': false, 'username': null});
+        }
       });
       
+      return of({'success': false, 'username': null});
+    }
+
+    gooAuth(): Observable<any> {
+      window.open(baseURL + 'users/auth/google', "mywindow", "location=1,status=1,scrollbars=1,width=800,height=800");
+      
+      window.addEventListener('message', (message) => {
+        if (message.data.success) {
+          this.storeUserCredentials({"username": message.data.username, "token": message.data.token});
+          return of({'success': true, 'username': message.data.username});
+        } else {
+          return of({'success': false, 'username': null});
+        }
+      });
+
       return of({'success': false, 'username': null});
     }
 
