@@ -94,9 +94,3 @@ import { SignupComponent } from './signup/signup.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-/*
-Mejoras:
-- Hacer la página responsive
-- Una vez el usuario se loguea, que pueda ver su imágen de perfil (como hotmail podría ser).
-- Añadir mapa de nuestra ubicación
-*/

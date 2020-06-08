@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { } from 'googlemaps';
 
 import { Feedback, ContactType } from '../shared/feedback';
 import { flyInOut, expand } from '../animation/app.animation';
@@ -29,6 +30,8 @@ export class ContactComponent implements OnInit {
   showPreview: boolean;
   showForm = true;
   @ViewChild('fform') feedbackFormDirective;
+  @ViewChild('map', { static: true }) mapElement;
+  map: google.maps.Map;
 
   formErrors = {
     'firstName': '',
@@ -64,6 +67,13 @@ export class ContactComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const mapProperties = {
+      center: new google.maps.LatLng(6.2614659, -75.5793956),
+      zoom: 17,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+
+    this.map = new google.maps.Map(this.mapElement.nativeElement, mapProperties);
   }
 
   createForm() {
