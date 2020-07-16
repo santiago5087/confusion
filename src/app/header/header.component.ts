@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   constructor(public dialog: MatDialog,
-    private authService: AuthService) { }
+    public authService: AuthService) { }
 
   ngOnInit(): void {
     this.authService.loadUserCredentials();

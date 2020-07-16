@@ -3,14 +3,15 @@
     <div fxFlex>
         <div>
             <h3>Menu</h3>
+            <h5>Select a dish</h5>
             <hr>
         </div>
     </div>
 
     <div fxFlex *ngIf="dishes">
         <mat-grid-list cols="2" rowHeight="200px">
-            <mat-grid-tile *ngFor="let dish of dishes" [routerLink]="['/dishdetail', dish._id]" 
-            appHighlight [@expand]>
+            <mat-grid-tile *ngFor="let dish of dishes" class="dish-tile" 
+            [routerLink]="['/dishdetail', dish._id]" appHighlight [@expand]>
                 <img heigt="200px" src="{{ baseURL + dish.image }}" alt="{{dish.name}}">
                 <mat-grid-tile-footer>
                     <h1> {{dish.name}} </h1>

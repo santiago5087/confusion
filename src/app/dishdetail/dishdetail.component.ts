@@ -84,7 +84,7 @@ export class DishdetailComponent implements OnInit, OnDestroy {
     this.dishService.getDishIds().subscribe(dishIds => {
       this.dishIds = dishIds
 
-      // El switchMap para de emitir valores del observable interno si un nuevo observable comienza a emitir
+      // El switchMap toma el valor emitido por un observable y lo transforma en otro observable y toma solo los valores generados del observable interno más reciente
       this.route.params.pipe(switchMap((params: Params) => {
         this.visibility = 'hidden'; 
         return this.dishService.getDish(params['id']); //Inner observable

@@ -25,7 +25,7 @@ export class AuthService {
 
   tokenKey = 'JWT';
   isAuthenticated: Boolean = false;
-  username: Subject<string> = new Subject<string>();
+  username: Subject<string> = new Subject<string>(); //Permite multicast - observable regular no
   authToken: string = undefined;
 
   constructor(private http: HttpClient,
@@ -80,7 +80,7 @@ export class AuthService {
       {'username': user.username, 'password': user.password})
       .pipe(map(res => {
         this.storeUserCredentials({"username": user.username, "token": res.token});
-        return {'success': true, 'username': user.username}
+        return {'success': true, 'username': user.username} //Lo emite el observable
       }),
       catchError(this.processHTTPMsgService.handleError));
     }

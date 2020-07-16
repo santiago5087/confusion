@@ -5,7 +5,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { AuthService } from '../services/auth.service';
 import { SignupService } from '../services/signup.service';
-import { from } from 'rxjs';
 
 const comparePwdsValidator: ValidatorFn = (control: FormGroup):
   ValidationErrors | null => {
@@ -71,10 +70,10 @@ export class SignupComponent implements OnInit {
     this.authService.fbAuth()
       .subscribe(res => {
         if (res.success) {
+          this.router.navigate(['/home']);
         } else {
           console.log(res);
         }
-        this.router.navigate(['/home']);
       },
       error => {
         console.log(error);
@@ -85,10 +84,10 @@ export class SignupComponent implements OnInit {
     this.authService.gooAuth()
       .subscribe(res => {
         if (res.success) {
+          this.router.navigate(['/home']);
         } else {
           console.log(res);
         }
-        this.router.navigate(['/home']);
       },
       error => {
         console.log(error);
