@@ -69,7 +69,7 @@ export class ContactComponent implements OnInit {
   ngOnInit(): void {
     const mapProperties = {
       center: new google.maps.LatLng(6.2614659, -75.5793956),
-      zoom: 17,
+      zoom: 15,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
 

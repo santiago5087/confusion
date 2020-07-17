@@ -44,6 +44,7 @@
 
     <div fxFlex="40">
         <h1 matLine>Comments</h1>
+        <h5 matLine *ngIf="!username" style="color: gray;">*Please log in to comment the dish</h5>
         <mat-list *ngIf="dish" [@visibility]="visibility" [@expand]>
             <mat-list-item *ngFor="let comment of dish.comments">
                 <p matLine>
