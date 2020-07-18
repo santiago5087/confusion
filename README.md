@@ -1,3 +1,9 @@
+### You can access to the full app at: https://resto-confusion.herokuapp.com
+
+This app consumes the next APIs:
+- OMDB API: http://www.omdbapi.com (for to extract information about movies and series) 
+- confusion-api: https://github.com/santiago5087/confusion-api (NodeJS app)
+
 # ConFusion
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.3.
